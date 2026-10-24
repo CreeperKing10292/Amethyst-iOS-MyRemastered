@@ -2304,8 +2304,8 @@ static BOOL ame87_mcVersionRequiresTextureBuffer(NSString *mcVersionId) {
         }
     }
     // Forward to SDL view for MC 26.3 (SDL3 input)
-    UIView *sdlView = findSDL_uikitview(self.view);
-    if (sdlView) [sdlView pressesEnded:presses withEvent:event];
+    // UIView *sdlView = findSDL_uikitview(self.view);
+    // if (sdlView) [sdlView pressesEnded:presses withEvent:event];
     // Always call super so that inputTextField (UITextInput) can receive
     // key-up events properly.
     [super pressesEnded:presses withEvent:event];
