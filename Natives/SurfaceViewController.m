@@ -2286,8 +2286,8 @@ static BOOL ame87_mcVersionRequiresTextureBuffer(NSString *mcVersionId) {
         }
     }
     // Forward to SDL view for MC 26.3 (SDL3 input)
-    UIView *sdlView = findSDL_uikitview(self.view);
-    if (sdlView) [sdlView pressesBegan:presses withEvent:event];
+    // UIView *sdlView = findSDL_uikitview(self.view);
+    // if (sdlView) [sdlView pressesBegan:presses withEvent:event];
     // Always call super so that inputTextField (UITextInput) can receive
     // key events for text input (e.g., Minecraft chat).
     // ★ [KB-SPACE] 别在这里改回「已处理就跳过 super」:#106 键盘崩溃正是跳过 super
