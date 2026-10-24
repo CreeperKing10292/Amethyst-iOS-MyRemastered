@@ -228,6 +228,34 @@ jobs:
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} 2>&1 | tee ci-logs/build.log
           fi
 
+            - name: Verify PatchJNA agent packaging
+        if: matrix.platform_name == 'ios'
+        run: |
+          set -e
+
+          echo "=== Checking Java agent ==="
+
+          JAR="JavaApp/build/patchjna_agent.jar"
+
+          if [ ! -f "$JAR" ]; then
+            echo "::error::PatchJNA agent JAR is missing"
+            exit 1
+          fi
+
+          echo "Agent JAR exists:"
+          ls -lh "$JAR"
+
+          echo "=== Checking agent class ==="
+          jar tf "$JAR" | grep -F \
+            'net/kdt/patchjna/PatchJNAAgent.class'
+
+          echo "=== Checking manifest ==="
+          unzip -p "$JAR" META-INF/MANIFEST.MF
+
+          echo "=== Checking packaged copies ==="
+          find . -name patchjna_agent.jar -print
+
+          echo "=== Verification complete ==="
       - name: Surface iOS build errors as check annotations
         # 主构建（gmake dsym package）的真实编译错误只存在于 job log，而 job log
         # 与 artifact 走 blob storage，外部（含协作者）取不回来，此前只能靠猜。
